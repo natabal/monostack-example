@@ -222,7 +222,7 @@ Finally let's build and start the ToDoList server using Docker Compose:
 
 Your server is now up and running. As we want to ensure that everything is working as expected, we'll use the cli provided by the generated SDK to try it out.
 
-> As you can see, the exact same SDK is used as a backend with Garuda, as a client library to write your own scripts, and for the cli. Monolithe can also generate SDK in various language such as Go, Objective-J, Java, and also HTML documentation. If you want to take a look at the documentation, run `monogen -d Specifications -L html` and open the `index.html` from `codegen/html` in your browser.
+> As you can see, the exact same SDK is used as a backend with Garuda, as a client library to write your own scripts, and for the cli. Monolithe can also generate SDK in various language such as Go, Objective-J, Java, and also HTML documentation. If you want to take a look at the documentation, run `monogen -f Specifications -L html` and open the `index.html` from `codegen/html` in your browser.
 
 Let's install our generated python package on our local machine:
 
@@ -311,12 +311,12 @@ Let's see about the client. You will need Cappuccino to be installed in order to
     $ cd Client && ./buildApp --cappuccino --cappinstalldir=/tmp/narwhal
     $ export PATH="/tmp/narwhal/bin:$PATH"
 
-> You now need to manage this project with XcodeCapp. Simply drop the `Client` folder into the XcodeCapp icon and add `/tmp/narwhal/bin` as an additional Toolchain Path.
-
 Let's build the rest of the needed libraries:
 
     $ git submodule update --init # just in case you missed the --recursive during clone :)
     $ ./buildApp -L
+
+> You now need to manage this project with XcodeCapp. Simply drop the `Client` folder into the XcodeCapp icon and add `/tmp/narwhal/bin` in the `Additional Toolchain Path` list.
 
 Now, generate the Objective-J SDK with Monolithe and put it where it should be:
 
@@ -335,8 +335,8 @@ Come back to your main terminal, and access the UI:
 
 You can log in using any credentials, but if you want to see the list and location you created before with the cli, the user name needs to be `root` as this is the one that is defined in the `Tools/rc`. The created objects belongs to that user and will only be visible by him. The server address should be:
 
-    $ echo https://$(docker-machine ip):3000
-    https://192.168.99.100:3000
+    $ echo http://$(docker-machine ip):3000
+    http://192.168.99.100:3000
 
 Now you can play around the UI and see how everything is working smoothly :).
 
@@ -489,8 +489,8 @@ Edit `ViewControllers/SKConfigurationModule.j` and make it look like:
 @import <NUKit/NUModule.j>
 @import "../Models/Models.j"
 
-@global SKUsersModule
-@global SKLocationsModule
+@class SKUsersModule
+@class SKLocationsModule
 
 
 @implementation SKConfigurationModule: NUModule
@@ -540,7 +540,7 @@ We now need to edit the `Resources/Configuration.xib`:
 - Set the NIB Name the `SKLocationsModule` to be `Locations`
 - Connect the File's Owner outlet `locationsModule` to the `SKLocationsModule` object.
 
-![animation](Images/tuto-locations-xib.gif)
+![animation](Images/tuto-configuration-xib.gif)
 
 Finally, we need to work on the `Locations.xib`
 
